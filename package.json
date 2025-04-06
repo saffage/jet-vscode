@@ -2,7 +2,7 @@
 	"name": "jet-vscode",
 	"displayName": "Jet",
 	"description": "Jet programming language support for VS Code",
-	"version": "0.1.0",
+	"version": "0.0.4",
 	"publisher": "Saffage",
 	"license": "MIT",
 	"icon": "icon.png",
