@@ -5,7 +5,7 @@
 	"version": "0.0.4",
 	"publisher": "Saffage",
 	"license": "MIT",
-	"icon": "icon.png",
+	"icon": "images/icon.png",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Saffage/jet-vscode"
@@ -35,8 +35,8 @@
 				],
 				"configuration": "jet-cfg.json",
 				"icon": {
-					"light": "logo.svg",
-					"dark": "logo.svg"
+					"light": "images/logo.svg",
+					"dark": "images/logo.svg"
 				}
 			},
 			{
