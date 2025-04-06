@@ -1,0 +1,10 @@
+{
+    "function expression": {
+        "prefix": "fn",
+        "body": "fn(${1:params})${2:result} = ${0:expr}"
+    },
+    "lambda expression": {
+        "prefix": "lambda",
+        "body": "λ ${0:expr}"
+    }
+}

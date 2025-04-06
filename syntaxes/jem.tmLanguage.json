@@ -1,0 +1,162 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "JEM",
+	"scopeName": "source.jem",
+	"patterns": [
+		{ "include": "#line-comment" },
+		{ "include": "#expr" }
+	],
+	"repository": {
+		"line-comment": {
+			"name": "comment.line.number-sign.jem",
+			"match": "(#).*$",
+			"captures": { "1": { "name": "punctuation.definition.comment.jem" } }
+		},
+		"expr": {
+			"patterns": [
+				{
+					"begin": "(\\()\\s*([_a-zA-Z][_a-zA-Z0-9]*)",
+					"beginCaptures": {
+						"1": { "name": "punctuation.definition.expr.begin.jem" },
+						"2": { "name": "keyword.other.atom.jem" }
+					},
+					"end": "\\)",
+					"endCaptures": { "0": { "name": "punctuation.definition.expr.end.jem" } },
+					"patterns": [
+						{ "include": "#line-comment" },
+						{ "include": "#expr" },
+						{ "include": "#atom" },
+						{ "include": "#line-info" }
+					]
+				},
+				{
+					"begin": "(\\()\\s*([^\\s\\)]*)",
+					"beginCaptures": {
+						"1": { "name": "invalid.illegal.expr.begin.jem" },
+						"2": { "name": "invalid.illegal.atom.jem" }
+					},
+					"end": "(\\))",
+					"endCaptures": { "1": { "name": "invalid.illegal.expr.end.jem" } }
+				}
+			]
+		},
+		"atom": {
+			"patterns": [
+				{
+					"comment": "Numeric constant",
+					"match": "([+-])([0-9]+(?:\\.[0-9]+)?(?:(e)([+-])[0-9]+)?)",
+					"captures": {
+						"1": { "name": "keyword.operator.number-sign.jem" },
+						"2": { "name": "constant.numeric.jem" },
+						"3": { "name": "keyword.other.unit.exponent.jem" },
+						"4": { "name": "keyword.operator.number-sign.jem" }
+					}
+				},
+				{
+					"comment": "String literal",
+					"begin": "\"",
+					"end": "(?!<[^\"]|\"\")\"",
+					"beginCaptures": { "0": { "name": "punctuation.definition.string.begin.jem" } },
+					"endCaptures": { "0": { "name": "punctuation.definition.string.end.jem" } },
+					"patterns": [
+						{
+							"include": "#escape",
+							"name": "meta.string"
+						},
+						{
+							"match": "([^\"]+)|(\"\")",
+							"captures": {
+								"1": { "name": "meta.string string.quoted.double.jem" },
+								"2": { "name": "meta.symbol constant.character.escape.jem" }
+							}
+						}
+					]
+				},
+				{
+					"comment": "Resolved identifier",
+					"match": "(\\$)([_a-zA-Z0-9]+)",
+					"captures": {
+						"1": { "name": "punctuation.definition.variable.jem" },
+						"2": { "name": "variable.name.jem" }
+					}
+				},
+				{
+					"comment": "Resolved identifier (quoted)",
+					"begin": "(\\$)\\s*(`)",
+					"end": "(?!<[^`]|``)`",
+					"beginCaptures": {
+						"1": { "name": "punctuation.definition.variable.jem" },
+						"2": { "name": "punctuation.definition.quote.begin.jem" }
+					},
+					"endCaptures": { "0": { "name": "punctuation.definition.quote.end.jem" } },
+					"patterns": [
+						{
+							"include": "#escape",
+							"name": "meta.symbol"
+						},
+						{
+							"match": "([^`]+)|(``)",
+							"captures": {
+								"1": { "name": "meta.symbol keyword.other.jem" },
+								"2": { "name": "meta.symbol constant.character.escape.jem" }
+							}
+						}
+					]
+				},
+				{
+					"comment": "Unresolved identifier",
+					"match": "\\b([_a-zA-Z0-9]+)\\b",
+					"captures": { "1": { "name": "keyword.other.jem" } }
+				},
+				{
+					"comment": "Unresolved identifier (quoted)",
+					"begin": "`",
+					"end": "(?!<[^`]|``)`",
+					"beginCaptures": { "0": { "name": "punctuation.definition.quote.begin.jem" } },
+					"endCaptures": { "0": { "name": "punctuation.definition.quote.end.jem" } },
+					"patterns": [
+						{
+							"include": "#escape",
+							"name": "meta.symbol"
+						},
+						{
+							"match": "([^`]+)|(``)",
+							"captures": {
+								"1": { "name": "meta.symbol keyword.other.jem" },
+								"2": { "name": "meta.symbol constant.character.escape.jem" }
+							}
+						}
+					]
+				},
+				{
+					"comment": "Empty node",
+					"match": "\\.",
+					"name": "keyword.operator.empty.jem"
+				},
+				{
+					"comment": "Incorrectly-parsed node",
+					"match": "\\?",
+					"name": "keyword.operator.error.jem"
+				}
+			]
+		},
+		"escape": {
+			"match": "(\\\\)(?:(\\{)([0-9A-F]+)(\\})|([0-9A-F]{2}))",
+			"captures": {
+				"1": { "name": "constant.character.escape.jem" },
+				"2": { "name": "punctuation.escape.begin.jem" },
+				"3": { "name": "constant.character.escape.jem" },
+				"4": { "name": "punctuation.escape.end.jem" },
+				"5": { "name": "constant.character.escape.jem" }
+			}
+		},
+		"line-info": {
+			"match": "@(?:\\{([^\\}]*)\\}|\\[([0-9]+)\\])?[0-9]+:[0-9]+(-[0-9]+:[0-9]+)?",
+			"name": "meta.tag.line-info.jem",
+			"captures": {
+				"1": { "name": "meta.tag.filepath.jem" },
+				"2": { "name": "meta.tag.file-index.jem" }
+			}
+		}
+	}
+}

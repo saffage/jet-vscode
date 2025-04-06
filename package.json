@@ -1,8 +1,8 @@
 {
 	"name": "jet-vscode",
-	"displayName": "Jet syntax highlighting",
-	"description": "Jet syntax highlighting for VS Code",
-	"version": "0.0.3",
+	"displayName": "Jet",
+	"description": "Jet programming language support for VS Code",
+	"version": "0.2.0",
 	"publisher": "Saffage",
 	"license": "MIT",
 	"icon": "icon.png",
@@ -13,17 +13,33 @@
 	"engines": {
 		"vscode": "^1.81.0"
 	},
-	"categories": [
-		"Programming Languages"
-	],
+	"categories": ["Programming Languages"],
 	"contributes": {
+		"snippets": [
+			{
+				"language": "jet",
+				"path": "snippets/jet.json"
+			}
+		],
 		"languages": [
 			{
 				"id": "jet",
-				"extensions": [
-					".jet"
-				],
-				"configuration": "jet-cfg.json"
+				"aliases": ["Jet", "jet"],
+				"extensions": [".jet"],
+				"configuration": "jet-cfg.json",
+				"icon": {
+					"light": "logo.svg",
+					"dark": "logo.svg"
+				}
+			},
+			{
+				"id": "jem",
+				"aliases": ["JEM", "jem"],
+				"extensions": [".jem"],
+				"configuration": "jem-cfg.json"
+			},
+			{
+				"id": "jet-injection"
 			}
 		],
 		"grammars": [
@@ -31,7 +47,61 @@
 				"language": "jet",
 				"scopeName": "source.jet",
 				"path": "syntaxes/jet.tmLanguage.json"
+			},
+			{
+				"language": "jet-injection",
+				"scopeName": "markdown.jet.codeblock",
+				"path": "syntaxes/jet-markdown.tmLanguage.json",
+				"injectTo": ["text.html.markdown"],
+				"embeddedLanguages": {
+					"meta.embedded.block.jet": "jet"
+				}
+			},
+			{
+				"language": "jem",
+				"scopeName": "source.jem",
+				"path": "syntaxes/jem.tmLanguage.json"
+			}
+		],
+		"commands": [
+			{
+				"category": "Jet",
+				"title": "Restart Language Server",
+				"command": "jet.restartLanguageServer"
+			}
+		],
+		"configuration": [
+			{
+				"title": "Enable language server",
+				"properties": {
+					"jet.enableLanguageServer": {
+						"type": "boolean",
+						"description": "Enable the language server.",
+						"default": "false"
+					}
+				}
+			},
+			{
+				"title": "Language server",
+				"properties": {
+					"jet.languageServerExecutable": {
+						"type": "string",
+						"description": "Path to the language server executable.",
+						"default": "jet"
+					}
+				}
 			}
 		]
+	},
+	"scripts": {
+		"compile": "tsc -b"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^9.0.0"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.75.1",
+		"@types/node": "^22.0.0",
+		"typescript": "^5.3.3"
 	}
 }
