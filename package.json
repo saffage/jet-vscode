@@ -2,7 +2,7 @@
 	"name": "jet-vscode",
 	"displayName": "Jet",
 	"description": "Jet programming language support for VS Code",
-	"version": "0.2.0",
+	"version": "0.1.0",
 	"publisher": "Saffage",
 	"license": "MIT",
 	"icon": "icon.png",
@@ -13,7 +13,9 @@
 	"engines": {
 		"vscode": "^1.81.0"
 	},
-	"categories": ["Programming Languages"],
+	"categories": [
+		"Programming Languages"
+	],
 	"contributes": {
 		"snippets": [
 			{
@@ -24,8 +26,13 @@
 		"languages": [
 			{
 				"id": "jet",
-				"aliases": ["Jet", "jet"],
-				"extensions": [".jet"],
+				"aliases": [
+					"Jet",
+					"jet"
+				],
+				"extensions": [
+					".jet"
+				],
 				"configuration": "jet-cfg.json",
 				"icon": {
 					"light": "logo.svg",
@@ -34,8 +41,13 @@
 			},
 			{
 				"id": "jem",
-				"aliases": ["JEM", "jem"],
-				"extensions": [".jem"],
+				"aliases": [
+					"JEM",
+					"jem"
+				],
+				"extensions": [
+					".jem"
+				],
 				"configuration": "jem-cfg.json"
 			},
 			{
@@ -52,7 +64,9 @@
 				"language": "jet-injection",
 				"scopeName": "markdown.jet.codeblock",
 				"path": "syntaxes/jet-markdown.tmLanguage.json",
-				"injectTo": ["text.html.markdown"],
+				"injectTo": [
+					"text.html.markdown"
+				],
 				"embeddedLanguages": {
 					"meta.embedded.block.jet": "jet"
 				}
