@@ -108,7 +108,10 @@
 		]
 	},
 	"scripts": {
-		"compile": "tsc -b"
+		"compile": "npm run check-types && tsc -b",
+		"package": "npm run compile",
+		"check-types": "tsc --noEmit",
+		"vscode:prepublish": "npm run package"
 	},
 	"dependencies": {
 		"vscode-languageclient": "^9.0.0"
