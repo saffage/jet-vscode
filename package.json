@@ -6,6 +6,7 @@
 	"publisher": "Saffage",
 	"license": "MIT",
 	"icon": "images/icon.png",
+	"main": "./out/extension.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Saffage/jet-vscode"
@@ -15,6 +16,9 @@
 	},
 	"categories": [
 		"Programming Languages"
+	],
+	"activationEvents": [
+		"workspaceContains:*.jet"
 	],
 	"contributes": {
 		"snippets": [
@@ -82,36 +86,48 @@
 				"category": "Jet",
 				"title": "Restart Language Server",
 				"command": "jet.restartLanguageServer"
+			},
+			{
+				"category": "Jet",
+				"title": "Enable Language Server",
+				"command": "jet.enableLanguageServerLocally"
+			},
+			{
+				"category": "Jet",
+				"title": "Disable Language Server",
+				"command": "jet.disableLanguageServerLocally"
 			}
 		],
 		"configuration": [
 			{
-				"title": "Enable language server",
+				"type": "object",
+				"title": "Jet",
 				"properties": {
+					"jet.path": {
+						"type": "string",
+						"description": "A path to the Jet executable. By default, the extension looks for `jet` in the PATH, but if set, will use the path specified instead.",
+						"default": null
+					},
 					"jet.enableLanguageServer": {
 						"type": "boolean",
-						"description": "Enable the language server.",
-						"default": "false"
-					}
-				}
-			},
-			{
-				"title": "Language server",
-				"properties": {
-					"jet.languageServerExecutable": {
-						"type": "string",
-						"description": "Path to the language server executable.",
-						"default": "jet"
+						"description": "Enable the Jet language server.",
+						"default": true
+					},
+					"jet.languageServerArgs": {
+						"type": "array",
+						"description": "Specify executable arguments",
+						"default": [
+							"language-server"
+						]
 					}
 				}
 			}
 		]
 	},
 	"scripts": {
-		"compile": "npm run check-types && tsc -b",
-		"package": "npm run compile",
-		"check-types": "tsc --noEmit",
-		"vscode:prepublish": "npm run package"
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -b",
+		"watch": "tsc -b -w"
 	},
 	"dependencies": {
 		"vscode-languageclient": "^9.0.0"
