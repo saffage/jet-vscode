@@ -13,6 +13,7 @@
 		{ "include": "#built-ins" },
 		{ "include": "#keywords" },
 		{ "include": "#meta-functions" },
+		{ "include": "#path" },
 		{ "include": "#operators" },
 		{ "include": "#unused" },
 		{ "include": "#colors" },
@@ -25,32 +26,32 @@
 			"patterns": [
 				{
 					"comment": "Documentation",
-					"begin": "(##)(?!#)",
-					"beginCaptures": { "1": { "name": "comment.block.documentation punctuation.definition.comment.jet" } },
-					"end": "$",
-					"patterns": [
-						{
-							"name": "meta.documentation.jet",
-							"match": "(\\{)([^\\}]*)(\\})",
-							"captures": { "2": { "patterns": [ { "include": "$self" } ] } }
-						},
-						{
-							"name": "comment.block.documentation",
-							"match": "[^\\{]*"
-						}
-					]
-				},
-				{
-					"comment": "Documentation",
 					"match": "(##)(?!#)([ ]{2})(.*)$",
 					"captures": {
-						"1": { "name": "comment.block.documentation punctuation.definition.comment.jet" },
-						"2": { "name": "comment.block.documentation" },
+						"1": { "name": "comment.block.documentation.jet punctuation.definition.comment.jet" },
+						"2": { "name": "comment.block.documentation.jet" },
 						"3": {
 							"name": "meta.documentation.jet",
 							"patterns": [ { "include": "$self" } ]
 						}
 					}
+				},
+				{
+					"comment": "Documentation",
+					"begin": "(##)(?!#)",
+					"beginCaptures": { "1": { "name": "comment.block.documentation.jet punctuation.definition.comment.jet" } },
+					"end": "$",
+					"patterns": [
+						{
+							"name": "meta.documentation.jet",
+							"match": "(\\[)([^\\]]*)(\\])",
+							"captures": { "2": { "patterns": [ { "include": "$self" } ] } }
+						},
+						{
+							"name": "comment.block.documentation.jet",
+							"match": "[^\\[]*"
+						}
+					]
 				},
 				{
 					"name": "comment.line.number-sign.jet",
@@ -269,7 +270,7 @@
 				},
 				{
 					"name": "keyword.control.jet",
-					"match": "\\b(when|case|if|else|assert)\\b"
+					"match": "\\b(when|case|if|else|assert|do)\\b"
 				},
 				{
 					"name": "keyword.operator.word.jet",
@@ -484,10 +485,17 @@
 			]
 		},
 		"meta-functions": {
-			"match": "\\b([a-z][_a-zA-Z0-9]*)\\b(!|\\\\)",
+			"match": "\\b([a-z][_a-zA-Z0-9]*)\\b(!)",
 			"captures": {
 				"1": { "name": "entity.name.function.meta.jet" },
 				"2": { "name": "entity.name.function.meta.exclamation-mark.jet" }
+			}
+		},
+		"path": {
+			"match": "\\b([a-z][_a-zA-Z0-9]*)?\\b(\\\\)",
+			"captures": {
+				"1": { "name": "entity.name.namespace.jet" },
+				"2": { "name": "punctuation.definition.path.separator.jet" }
 			}
 		}
 	}
